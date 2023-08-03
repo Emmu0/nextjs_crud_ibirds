@@ -14,9 +14,9 @@ const EditTopicForm = ({ id, title, description }) => {
         e.preventDefault();
 
         try {
-            const response = await axios.put(`/api/topics/${id}`, {
-                newTitle,
-                newDescription,
+            const response = await axios.put(`/api/route/update?id=${id}`, {
+                title: newTitle,
+                description: newDescription,
             });
 
             if (response.status === 200) {

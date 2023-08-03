@@ -11,15 +11,11 @@ const EditTopic = ({ params }) => {
     const [topic, setTopic] = useState({});
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        const getTopic = async () => {
+    useEffect(async () => {
             try {
-                const response = await axios.get(`/api/topics/${id}`, {
-                    headers: { 'Cache-Control': 'no-cache' },
-                });
-
+                const response = await axios.get(`/api/route/getupdate/?id=${id}`);
                 if (response.status === 200) {
-                    setTopic(response.data.topic);
+                    setTopic(response.data.records);
                 } else {
                     throw new Error('Failed to fetch topic');
                 }
@@ -29,10 +25,9 @@ const EditTopic = ({ params }) => {
             } finally {
                 setIsLoading(false);
             }
-        };
+        }, [id]);
+console.log(topic,'responce');
 
-        getTopic();
-    }, [id]);
 
     return (
         <div>
@@ -42,6 +37,7 @@ const EditTopic = ({ params }) => {
                 <EditTopicForm id={id} title={topic.title} description={topic.description} />
             )}
         </div>
+
     );
 };
 
