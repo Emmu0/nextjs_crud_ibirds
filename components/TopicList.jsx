@@ -28,14 +28,13 @@ const TopicList = () => {
                         <h2 className="font-bold text-2xl">{data.title}</h2>
                         <div>{data.description}</div>
                         <div>{data.createdAt}</div>
-                        <div>{data._id}</div>
                     </div>
 
                     <div className="flex gap-2">
                         <RemoveBtn id={data._id} />
-                        <Link href={`/editTopic/${data._id}`}>
+                        <a href={`/editTopic/${data._id}`}>
                             <HiPencilAlt size={24} />
-                        </Link>
+                        </a>
                     </div>
                 </div>
             ))}

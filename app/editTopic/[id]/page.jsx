@@ -10,26 +10,32 @@ const EditTopic = ({ params }) => {
     const { id } = params;
     const [topic, setTopic] = useState({});
     const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(async () => {
-            try {
-                const response = await axios.get(`/api/route/getupdate/?id=${id}`);
-                if (response.status === 200) {
-                    setTopic(response.data.records);
-                } else {
-                    throw new Error('Failed to fetch topic');
-                }
-            } catch (error) {
-                console.log(error);
-                toast.error('Failed to fetch topic. Please try again.');
-            } finally {
-                setIsLoading(false);
+    const getTopic =  async () => {
+       
+        try {
+            const response = await axios.get(`/api/route/getupdate?id=${id}`);
+            if (response.status === 200) {
+                setTopic(response.data.records);
+            } else {
+                throw new Error('Failed to fetch topic');
             }
-        }, [id]);
-console.log(topic,'responce');
+        } catch (error) {
+            // console.log(error);
+            toast.error('Failed to fetch topic. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        if(id){
+            getTopic();    
+        }
+    }, [id]);
 
 
     return (
+        
         <div>
             {isLoading ? (
                 <div>Loading...</div>

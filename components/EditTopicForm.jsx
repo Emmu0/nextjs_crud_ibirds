@@ -26,8 +26,7 @@ const EditTopicForm = ({ id, title, description }) => {
                 throw new Error('Failed to update topic');
             }
         } catch (error) {
-            console.log(error);
-            toast.error('Failed to update topic. Please try again.');
+            toast.error(error);
         }
     };
 
