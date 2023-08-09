@@ -1,14 +1,22 @@
 import { loginUser } from '@/redux/action/api';
-import React from 'react'
+import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 const LogIn = ({ pageHandler }) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const {signin} = useSelector((state )=> state.collections);
+
   const dispatch = useDispatch()
+  const router = useRouter();
+
   const onSubmit = (data) => {
     dispatch(loginUser(data));
   };
+
+  
   return (
     <div>
       <div className="modal d-block" tabindex="-1" role="dialog">
@@ -34,7 +42,6 @@ const LogIn = ({ pageHandler }) => {
                   <input type="password" className="form-control" {...register('password', {
                     required: { value: true, message: 'Password is required' }
                   })} placeholder="password" />
-                  {console.log(errors, 'errors')}
                   {errors?.password?.type && <small className="text-danger">{errors?.password?.message}</small>}
                 </div>
 

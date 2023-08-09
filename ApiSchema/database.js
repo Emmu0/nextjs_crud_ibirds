@@ -10,6 +10,10 @@ const userSchema = new mongoose.Schema({
   description: {
     type: String,
     required: true // Make the 'description' field required
+  },
+  imgurl: {
+    type: String,
+    required: true // Make the 'description' field required
   } 
 },
 {

@@ -6,22 +6,24 @@ import errorHandler from "@/midleware/error";
 export default async (req, res) => {
 
     if (req.method == "POST") {
-        const { title, description } = req.body;
-        if (!title || !description)
+        const { title, description,imgurl } = req.body;
+        if (!title || !description || !imgurl)
         return errorHandler(res, 400, "Please Enter title and description.");
 
         await connectDB();
-      
+      console.log(imgurl,'imgurl');
         const JsonData = Schema.create({
             title,
-            description
+            description,
+            imgurl
         })
         return res.status(200).json({
             success: true,
             message: 'successfull !',
             rescord: {
                 title: title,
-                description: description
+                description: description,
+                imgurl : imgurl
             }
         })
     } else {

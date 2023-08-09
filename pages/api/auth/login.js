@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt';
 
 const handle = async (req, res) => {
     if(req.method !== "POST") return  errorHandler(res, 404, "only POST api Method is allowed");
-    const { name, email, password } = req?.body;
+    const {  email, password } = req?.body;
     // Please Enter title and description.
     if (!email || !password){
         return errorHandler(res, 400, "enter valid Email and Password.");}
