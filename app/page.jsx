@@ -29,7 +29,7 @@ export default function Home() {
     <>
       <Provider store={store}>
         <MainNavbar pageHandler={pageHandler} />
-        <div className="mt-8 pt-5" >
+        <div className="mt-8 pt-5 container" >
           {localStorage.getItem("token") ?
             <Homepage />
             :

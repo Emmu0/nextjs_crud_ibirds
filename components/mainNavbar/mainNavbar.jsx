@@ -36,7 +36,7 @@ const logouthandler = () =>{
             </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="./addTopic">
+            <a className="nav-link" href="/hubRoot/addTopic">
               ToDo
             </a>
           </li>
@@ -89,7 +89,7 @@ const logouthandler = () =>{
             </button>
           </li>
           <li> 
-            <button  className="nav-link" href="./addTopic" onClick={()=>pageHandler("Signup")}>
+            <button  className="nav-link" href="/hubRoot/addTopic" onClick={()=>pageHandler("Signup")}>
             <span className="btn btn-success my-2 py-1 ml-2 my-sm-0">SignUp</span>
             </button>
           </li>

@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ShimmerContentBlock } from 'react-shimmer-effects';
 
 const EditTopic = ({ params }) => {
     const { id } = params;
@@ -33,14 +34,20 @@ const EditTopic = ({ params }) => {
         }
     }, [id]);
 
-
+console.log(topic,'topic');
     return (
         
-        <div>
+        <div className="container">
             {isLoading ? (
-                <div>Loading...</div>
+                <div><ShimmerContentBlock
+                title
+                text
+                cta
+                thumbnailWidth={370}
+                thumbnailHeight={370}
+              /></div>
             ) : (
-                <EditTopicForm id={id} title={topic.title} description={topic.description} />
+                <EditTopicForm id={id} title={topic.title} description={topic.description} imgUrl={topic?.imgurl}/>
             )}
         </div>
 

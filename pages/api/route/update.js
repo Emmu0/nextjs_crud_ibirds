@@ -19,7 +19,7 @@ export default async (req, res) => {
 
       const updatedRecord = await Schema.findByIdAndUpdate(
         _id?.id, // Find record by _id
-        { title: newData.title, description: newData.description }, // Update with newData
+        { title: newData.title, description: newData.description,imgurl: newData.imgurl  }, // Update with newData
         { new: true } // Return the updated record
       );
       console.log(updatedRecord, 'updaterecords');
