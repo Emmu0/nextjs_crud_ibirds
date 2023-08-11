@@ -51,3 +51,20 @@ export const loginOut = () => async (dispatch) => {
     }
 }
 
+export const deleteTopic = (id) =>async(dispatch)=>{
+    if(id){
+        try {
+            const {data} = await axios.delete(`/api/route/delete/?_id=${id}`);
+    
+            dispatch({ type: RESPONSE_OK, payload: data })
+            // if (response.status === 200) {
+            //     window.location.reload();
+            //     return toast.success(response?.message);
+            // }
+        } catch (error) {
+            return toast.success(error);
+        }
+    }
+    
+}
+

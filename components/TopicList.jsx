@@ -1,24 +1,29 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import RemoveBtn from './RemoveBtn';
-import Link from 'next/link';
 import { HiPencilAlt } from 'react-icons/hi';
 import axios from 'axios';
 import { ShimmerContentBlock } from 'react-shimmer-effects';
+import { useSelector } from 'react-redux';
 
 const TopicList = () => {
-    const [topics, setTopics] = useState([]);
+    const {responseOk} = useSelector((state )=> state.collections);
+    const [topics, setTopics] = useState();
 
-    console.log(topics, "topics")
-
-    useEffect(async () => {
+    console.log(topics, "topwwwics")
+    const getallTopic = async() =>{
         try {
             const response = await axios.get(`/api/route/all`);
             setTopics(response.data.records);
         } catch (error) {
             console.log('Error loading topics:', error);
         }
-    }, []);
+    }
+    useEffect(() => {
+
+        getallTopic();
+      
+    }, [responseOk]);
 
     return (
         <>

@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
   timestamps: true,
 });
 let userdata = null; 
-console.log(mongoose.models.user,'mongoose.models.Todo');
+
 if (mongoose.models.user) {
   // If the model already exists, use it
   userdata = mongoose.models.user;

@@ -3,6 +3,7 @@ import React from 'react'
 import Footer from './Footer'
 import LogIn from '@/components/Forms/LogIn';
 import Signup from '@/components/Forms/Signup';
+import { useSelector } from 'react-redux';
 
 const index = ({form,pageHandler}) => {
   return (

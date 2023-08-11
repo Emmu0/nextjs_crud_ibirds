@@ -1,7 +1,21 @@
+"use client"
 import TopicList from '@/components/TopicList'
-import React from 'react'
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const Homepage = () => {
+  const { responseOk } = useSelector((state) => state.collections);
+  console.log(responseOk,'responseOk');
+
+  useEffect(() => {
+    if (responseOk) {
+      console.log(responseOk,"responseOk !");
+      toast.success(responseOk?.message)
+    } else {
+      toast.warn(responseOk?.message)
+    }
+  }, [responseOk])
     return (
         <div>
             <h1 className="d-flex justify-content-center text-3xl font-bold">Welcome to HomePage</h1>

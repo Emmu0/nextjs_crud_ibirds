@@ -21,7 +21,7 @@ export default async (req, res) => {
 
       res.status(200).json({
         success: true,
-        message: 'Record updated successfully!',
+        message: 'Record Deleted successfully!',
         deletedRecord
       });
     } catch (error) {
