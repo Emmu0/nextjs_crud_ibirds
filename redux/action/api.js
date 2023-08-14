@@ -68,3 +68,24 @@ export const deleteTopic = (id) =>async(dispatch)=>{
     
 }
 
+export const googleAuthenticate = (formdata) =>async(dispatch)=>{
+    if(formdata){
+        try {
+            const {data} = await axios.post(`/api/auth/googleAuth`,formdata);
+            if (data?.token) {
+                localStorage.setItem("token", data?.token)
+                try {
+                    dispatch({ type: RESPONSE_OK, payload: data })
+                    window.location.reload();
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+        } catch (error) {
+            return toast.success(error);
+        }
+    }
+}
+
+// http://localhost:3000/api/auth/googleAuth
+

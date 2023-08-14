@@ -1,11 +1,25 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import Footer from './Footer'
 import LogIn from '@/components/Forms/LogIn';
 import Signup from '@/components/Forms/Signup';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useSession } from 'next-auth/react';
+import { googleAuthenticate } from '@/redux/action/api';
 
 const index = ({form,pageHandler}) => {
+  const dispatch = useDispatch();
+  const session = useSession();
+
+  useEffect(() => {
+    if (session?.data?.user) {
+      const formdata = {
+        name: session?.data?.user?.name,
+        email: session?.data?.user?.email
+      }
+      dispatch(googleAuthenticate(formdata))
+    }
+  }, [session?.data?.user])
   return (
     <div>
       

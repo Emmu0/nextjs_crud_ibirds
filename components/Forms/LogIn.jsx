@@ -1,5 +1,5 @@
-import { loginUser } from '@/redux/action/api';
-import { signIn, useSession } from 'next-auth/react';
+import { googleAuthenticate, loginUser } from '@/redux/action/api';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form';
@@ -10,22 +10,20 @@ import { SiGridsome } from "react-icons/si";
 const LogIn = ({ pageHandler }) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const { signin } = useSelector((state) => state.collections);
-  const session = useSession()
-console.log(session,'session');
+ 
   const dispatch = useDispatch()
   const router = useRouter();
 
   const onSubmit = (data) => {
     dispatch(loginUser(data));
   };
+
+ 
+
   const handleGoogleAuth = () => {
     // Implement your Google authentication logic here
     signIn("google")
     
-    console.log(
-    signIn("google")
-    ,'("google")');
-
   };
 
   return (
@@ -64,7 +62,7 @@ console.log(session,'session');
                 <button type="submit" className="btn btn-primary p-1">Submit</button>
                 {/* Google authentication button */}
                 <button type="button" className="btn text-light bg-success d-flex " onClick={handleGoogleAuth}>
-                  <SiGridsome className="m-0.5 mr-1 text-light"/> <small>Login with Google</small>
+                  <SiGridsome className="m-0.5 mr-1 text-light" /> <small>Login with Google</small>
                 </button>
                 <button type="button" className="btn btn-secondary p-1" onClick={() => pageHandler(undefined)}>Close</button>
               </div>

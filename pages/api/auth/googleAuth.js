@@ -4,37 +4,50 @@ import userSchema from "@/ApiSchema/user";
 import bcrypt from 'bcrypt';
 import React from 'react'
 import { getToken } from 'next-auth/jwt';
+import { cookieSetter } from '@/midleware';
 
-const handle =async (req, res) => {
+const handle = async (req, res) => {
     console.log('heloo !! @@');
 
     if (req.method == "POST") {
 
         const { name, email } = req.body;
-        console.log(name, email,'name, email');
+        // console.log(name, email,'name, email');
         if (!name && !email) return errorHandler(res, 400, "Failed Authication !");
 
         const ragexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if(!ragexEmail.test(email)) {return errorHandler(res, 400, "Enter valid Email address !");}
+        if (!ragexEmail.test(email)) { return errorHandler(res, 400, "Enter valid Email address !"); }
 
+        const encryptedPassword = await bcrypt.hash(email, 10);
         await connectDB();
-        let user = await userSchema.findOne({email})
-        if(user){
-            return errorHandler(res, 400, "user Already exist.");
-        }else{
-            bcrypt
-            const encryptedPassword = await bcrypt.hash(email, 10);
+        let user = await userSchema.findOne({ email })
+        // return false
+        let token = '';
 
+        if (user) {
+            console.log(user, { email }, 'user!!');
+
+            token = getToken(user._id)
+
+            cookieSetter(res, token, true);
+            return res.status(200).json({
+                success: true,
+                message: "logged in successfully !",
+                token
+            })
+        } else {
             await userSchema.create({
                 name,
                 email,
-                password : encryptedPassword
+                password: encryptedPassword
             })
-            console.log(user,'encryptedPassword 1');
-
-            // const token = getToken(user._id)
-            // cookieSetter(res, token, true)
-            // console.log(token,encryptedPassword,user,'encryptedPassword 2');
+            token = getToken(user._id)
+            cookieSetter(res, token, true)
+            return res.status(200).json({
+                success: true,
+                message: "User created !",
+                token
+            })
         }
 
 
