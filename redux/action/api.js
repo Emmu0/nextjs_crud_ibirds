@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LOGIN, SIGNUP, RESPONSE_OK } from "./type";
+import { LOGIN, SIGNUP, RESPONSE_OK, ALL_TOPICS } from "./type";
 
 
 export const loginUser = (formdata) => async (dispatch) => {
@@ -41,8 +41,8 @@ export const signUp = (formdata) => async (dispatch) => {
 }
 
 export const loginOut = () => async (dispatch) => {
-    const { data } = await axios.get(`api/auth/logout`);
     try {
+        const { data } = await axios.get(`api/auth/logout`);
         localStorage.clear()
         window.location.reload();
         dispatch({ type: RESPONSE_OK, payload: data })
@@ -86,6 +86,26 @@ export const googleAuthenticate = (formdata) =>async(dispatch)=>{
         }
     }
 }
-
-// http://localhost:3000/api/auth/googleAuth
+export const getAllTopic = () =>async(dispatch)=>{
+   
+        try {
+            const {data} = await axios.get(`/api/route/all`);
+                    dispatch({ type: ALL_TOPICS, payload: data })
+        } catch (error) {
+            return toast.success(error);
+        }
+}
+// http://localhost:3000/api/feedback/createfeedback
+export const FeedbackHandle = (formdata) =>async(dispatch)=>{
+    console.log(formdata,'formdata');
+   if(formdata){
+    try {
+            const {data} = await axios.post(`/api/feedback/createfeedback`,formdata);
+                    dispatch({ type: RESPONSE_OK, payload: data })
+        } catch (error) {
+            return toast.success(error);
+        }
+   }
+        
+}
 

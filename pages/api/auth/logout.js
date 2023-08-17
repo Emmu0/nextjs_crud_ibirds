@@ -1,5 +1,5 @@
-import { cookieSetter } from '@/midleware';
-import errorHandler from '@/midleware/error';
+import { cookieSetter } from '@/utils';
+import errorHandler from '@/utils/error';
 import React from 'react'
 
 const logout = async (req, res) => {

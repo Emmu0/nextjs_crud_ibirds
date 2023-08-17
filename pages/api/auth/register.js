@@ -1,7 +1,7 @@
 import React from 'react'
 import userSchema from "../../../ApiSchema/user";
-import errorHandler from '@/midleware/error';
-import { cookieSetter, getToken } from '@/midleware';
+import errorHandler from '@/utils/error';
+import { cookieSetter, getToken } from '@/utils';
 import connectDB from '@/config/database';
 import bcrypt from 'bcrypt';
 

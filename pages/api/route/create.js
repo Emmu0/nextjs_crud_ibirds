@@ -1,21 +1,23 @@
 import connectDB from "@/config/database"
 import Schema from "../../../ApiSchema/database";
-import errorHandler from "@/midleware/error";
+import errorHandler from "@/utils/error";
 
 
 export default async (req, res) => {
 
     if (req.method == "POST") {
-        const { title, description,imgurl } = req.body;
-        if (!title || !description || !imgurl)
+        const { title, description,imgurl,blogtype } = req.body;
+      console.log( req.body,blogtype,'type!!');
+
+        if (!title || !description || !imgurl || !blogtype)
         return errorHandler(res, 400, "Please Enter title and description.");
 
         await connectDB();
-      console.log(imgurl,'imgurl');
         const JsonData = Schema.create({
             title,
             description,
-            imgurl
+            imgurl,
+            type: blogtype
         })
         return res.status(200).json({
             success: true,
@@ -23,7 +25,8 @@ export default async (req, res) => {
             rescord: {
                 title: title,
                 description: description,
-                imgurl : imgurl
+                imgurl : imgurl,
+                type: blogtype
             }
         })
     } else {

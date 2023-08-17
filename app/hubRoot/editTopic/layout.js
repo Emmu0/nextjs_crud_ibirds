@@ -1,4 +1,5 @@
 import Navbar from '@/components/Navbar'
+import MainNavbar from '@/components/mainNavbar/mainNavbar'
 import React from 'react'
 
 const layout = ({children}) => {
@@ -6,6 +7,7 @@ const layout = ({children}) => {
     <div>
       <div>
             <div className='mb-3'>
+              {/* <MainNavbar/> */}
                 <Navbar />
             </div>
             {children}

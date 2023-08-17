@@ -9,6 +9,7 @@ import MainNavbar from '@/components/mainNavbar/mainNavbar';
 import { useState } from 'react';
 import DefaultPage from "./defaultPage";
 
+
 export default function Home() {
   const [dec, setdec] = useState(false)
 
@@ -24,7 +25,7 @@ export default function Home() {
     <>
       {/* <Provider store={store}> */}
         <MainNavbar pageHandler={pageHandler} />
-        <div className="mt-8 pt-5 container" >
+        <div className=" pt-5" >
           {localStorage.getItem("token") ?
             <Homepage />
             :

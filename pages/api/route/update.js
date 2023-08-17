@@ -1,7 +1,7 @@
 
 import connectDB from '@/config/database';
 import Schema from '../../../ApiSchema/database';
-import errorHandler from '@/midleware/error';
+import errorHandler from '@/utils/error';
 
 export default async (req, res) => {
   console.log(req.method,'req');

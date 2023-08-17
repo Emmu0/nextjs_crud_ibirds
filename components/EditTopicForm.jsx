@@ -4,14 +4,17 @@ import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Select from 'react-select';
 
-const EditTopicForm = ({ id, title, description,imgUrl }) => {
+const EditTopicForm = ({ id, title, description, imgUrl }) => {
     const [newTitle, setNewTitle] = useState(title);
     const [newDescription, setNewDescription] = useState(description);
-    
+    const [blogtype, setType] = useState('');
+
+
     const [selectedImage, setSelectedImage] = useState(imgUrl);
     const [base64Image, setBase64Image] = useState(imgUrl);
-const csshandle = "border border-indigo-500 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+    const csshandle = "border border-indigo-500 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
     const router = useRouter();
 
 
@@ -34,7 +37,8 @@ const csshandle = "border border-indigo-500 px-4 py-2 rounded-md focus:outline-n
             const response = await axios.put(`/api/route/update?id=${id}`, {
                 title: newTitle,
                 description: newDescription,
-                imgurl: base64Image
+                imgurl: base64Image,
+                blogtype
             });
 
             if (response.status === 200) {
@@ -47,9 +51,17 @@ const csshandle = "border border-indigo-500 px-4 py-2 rounded-md focus:outline-n
             toast.error(error);
         }
     };
+    const options = [
+        { value: 'food', label: 'food' },
+        { value: 'Fruits', label: 'Fruits' },
+        { value: 'Vegitable', label: 'Vegitable' },
+        { value: 'city', label: 'city' }
+    ]
 
     return (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+
+        <><span className="d-flex justify-content-center mt-8 font-bold">Update Topic</span>
+        <form onSubmit={handleSubmit} className="flex flex-col  w-50 gap-3  container my-8">
             <input
                 onChange={(e) => setNewTitle(e.target.value)}
                 value={newTitle}
@@ -65,28 +77,35 @@ const csshandle = "border border-indigo-500 px-4 py-2 rounded-md focus:outline-n
                 type="text"
                 placeholder="Topic Description"
             />
-           <div className="custom-input d-flex justify-content-between border border-slate-500 px-4">
-                    <input
-                        onChange={(e) => handleImageChange(e)}
-                        className="custom-input"
-                        height={100}
-                        width={100}
-                        type="file"
-                        accept="image/*"
-                    />
-                    {selectedImage && (
-                        <div>
-                            <small>Selected Image:</small>
-                            <img src={base64Image} height={100}
-                                width={100} alt="img.png" />
-                        </div>
-                    )}
-                </div>
+            <div className="custom-input d-flex justify-content-between border border-slate-500 px-4">
+                <input
+                    onChange={(e) => handleImageChange(e)}
+                    className="custom-input"
+                    height={100}
+                    width={100}
+                    type="file"
+                    accept="image/*"
+                />
+                {selectedImage && (
+                    <div>
+                        <small>Selected Image:</small>
+                        <img src={base64Image} height={100}
+                            width={100} alt="img.png" />
+                    </div>
+                )}
+            </div>
+            <Select onChange={(e) => setType(e.value)} options={options} />
 
-            <button className="bg-green-600 font-bold text-white py-3 px-6 w-fit" type="submit">
-                Update Topic
+
+            <button type="submit" className="btn btn-outline-primary py-2 px-6 w-fit">
+                Update
             </button>
+            {/* <button className="bg-green-600 font-bold text-white py-3 px-6 w-fit" type="submit">
+               
+            </button> */}
         </form>
+        </>
+        
     );
 };
 

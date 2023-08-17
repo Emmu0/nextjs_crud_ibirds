@@ -1,6 +1,6 @@
 import connectDB from "@/config/database"
 import Schema from "../../../ApiSchema/database";
-import errorHandler from "@/midleware/error";
+import errorHandler from "@/utils/error";
 
 
 export default async (req, res) => {
@@ -14,7 +14,7 @@ export default async (req, res) => {
             records
           });
     }else{
-       errorHandler(res,500,"error 404")
+       errorHandler(res,404,"error 404")
     }
     
   };

@@ -5,10 +5,12 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation';
+import Select  from 'react-select';
 
 const AddTopic = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [blogtype, setType] = useState('');
     const [base64Image, setBase64Image] = useState('');
 
     const router = useRouter();
@@ -28,7 +30,6 @@ const AddTopic = () => {
             reader.readAsDataURL(file);
         }
     };
-
     const handleSubmit = async (e) => {
         console.log(URL.createObjectURL(selectedImage), 'base64Image');
 
@@ -40,7 +41,8 @@ const AddTopic = () => {
             const response = await axios.post(`/api/route/create`, {
                 title,
                 description,
-                imgurl: base64Image
+                imgurl: base64Image,
+                blogtype
             });
 
             if (response.status === 200) {
@@ -55,9 +57,16 @@ const AddTopic = () => {
             toast.error('Failed to create a topic. Please try again.');
         }
     };
+    const options = [
+        { value: 'food', label: 'food' },
+        { value: 'Fruits', label: 'Fruits' },
+        { value: 'Vegitable', label: 'Vegitable' },
+        { value: 'city', label: 'city' }
+      ]
     return (
         <>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-3 container">
+        <span className="d-flex justify-content-center mt-8 font-bold">Add Topic</span>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-3 container my-8 w-50 ">
                 <input
                     onChange={(e) => setTitle(e.target.value)}
                     value={title}
@@ -90,12 +99,16 @@ const AddTopic = () => {
                         </div>
                     )}
                 </div>
+                <Select onChange={(e)=>setType(e.value)} options={options} />
 
 
-                <button type="submit" className="bg-green-600 font-bold text-white py-3 px-6 w-fit">
+                <button type="submit" className="btn btn-outline-primary py-2 px-6 w-fit">
                     Add Topic
                 </button>
+                
+
             </form>
+            
         </>
     );
 };

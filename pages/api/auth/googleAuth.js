@@ -1,10 +1,10 @@
 import connectDB from '@/config/database';
-import errorHandler from '@/midleware/error';
+import errorHandler from '@/utils/error';
 import userSchema from "@/ApiSchema/user";
 import bcrypt from 'bcrypt';
 import React from 'react'
 import { getToken } from 'next-auth/jwt';
-import { cookieSetter } from '@/midleware';
+import { cookieSetter } from '@/utils';
 
 const handle = async (req, res) => {
     console.log('heloo !! @@');
