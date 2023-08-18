@@ -19,7 +19,6 @@ const AuthProvider = ({ children }) => {
         reducers,
         composeEnhancers(applyMiddleware(reduxThunk))
     );
-    // console.log({children},'children');
     return (
         <div>
             <SessionProvider>

@@ -8,6 +8,7 @@ import { useSession } from 'next-auth/react';
 import { getAllTopic, googleAuthenticate } from '@/redux/action/api';
 import { image2 } from '@/image';
 import { Fa500Px, FaAccusoft, FaAffiliatetheme, FaAirbnb, FaCheckDouble } from 'react-icons/fa6';
+import TimeLine from '@/components/TimeLine';
 
 const index = ({ form, pageHandler }) => {
   const { alltopics_Response } = useSelector((state) => state.collections);
@@ -81,7 +82,7 @@ const index = ({ form, pageHandler }) => {
             </div>
           </div>
         </section>
-
+        <TimeLine/>
         {/* <!-- ======= About Section ======= --> */}
         <section id="about" className="about px-8">
           <div className="container" data-aos="fade-up">

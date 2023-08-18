@@ -13,9 +13,6 @@ import DefaultPage from "./defaultPage";
 export default function Home() {
   const [dec, setdec] = useState(false)
 
-
-
-  
   const [form, setFrom] = useState()
   const pageHandler = (val) => {
       setFrom(val)

@@ -10,6 +10,8 @@ const EditTopicForm = ({ id, title, description, imgUrl }) => {
     const [newTitle, setNewTitle] = useState(title);
     const [newDescription, setNewDescription] = useState(description);
     const [blogtype, setType] = useState('');
+    const [spinner, setspinner] = useState(false)
+
 
 
     const [selectedImage, setSelectedImage] = useState(imgUrl);
@@ -34,6 +36,7 @@ const EditTopicForm = ({ id, title, description, imgUrl }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            setspinner(true)
             const response = await axios.put(`/api/route/update?id=${id}`, {
                 title: newTitle,
                 description: newDescription,
@@ -42,9 +45,11 @@ const EditTopicForm = ({ id, title, description, imgUrl }) => {
             });
 
             if (response.status === 200) {
+                setspinner(false)
                 toast.success('Topic updated successfully!');
                 router.push('/');
             } else {
+                setspinner(false)
                 throw new Error('Failed to update topic');
             }
         } catch (error) {
@@ -61,51 +66,55 @@ const EditTopicForm = ({ id, title, description, imgUrl }) => {
     return (
 
         <><span className="d-flex justify-content-center mt-8 font-bold">Update Topic</span>
-        <form onSubmit={handleSubmit} className="flex flex-col  w-50 gap-3  container my-8">
-            <input
-                onChange={(e) => setNewTitle(e.target.value)}
-                value={newTitle}
-                className={csshandle}
-                type="text"
-                placeholder="Topic Title"
-            />
-
-            <input
-                onChange={(e) => setNewDescription(e.target.value)}
-                value={newDescription}
-                className={csshandle}
-                type="text"
-                placeholder="Topic Description"
-            />
-            <div className="custom-input d-flex justify-content-between border border-slate-500 px-4">
+            <form onSubmit={handleSubmit} className="flex flex-col  w-50 gap-3  container my-8">
                 <input
-                    onChange={(e) => handleImageChange(e)}
-                    className="custom-input"
-                    height={100}
-                    width={100}
-                    type="file"
-                    accept="image/*"
+                    onChange={(e) => setNewTitle(e.target.value)}
+                    value={newTitle}
+                    className={csshandle}
+                    type="text"
+                    placeholder="Topic Title"
                 />
-                {selectedImage && (
-                    <div>
-                        <small>Selected Image:</small>
-                        <img src={base64Image} height={100}
-                            width={100} alt="img.png" />
-                    </div>
-                )}
-            </div>
-            <Select onChange={(e) => setType(e.value)} options={options} />
+
+                <input
+                    onChange={(e) => setNewDescription(e.target.value)}
+                    value={newDescription}
+                    className={csshandle}
+                    type="text"
+                    placeholder="Topic Description"
+                />
+                <div className="custom-input d-flex justify-content-between border border-slate-500 px-4">
+                    <input
+                        onChange={(e) => handleImageChange(e)}
+                        className="custom-input"
+                        height={100}
+                        width={100}
+                        type="file"
+                        accept="image/*"
+                    />
+                    {selectedImage && (
+                        <div>
+                            <small>Selected Image:</small>
+                            <img src={base64Image} height={100}
+                                width={100} alt="img.png" />
+                        </div>
+                    )}
+                </div>
+                <Select onChange={(e) => setType(e.value)} options={options} />
 
 
-            <button type="submit" className="btn btn-outline-primary py-2 px-6 w-fit">
-                Update
-            </button>
-            {/* <button className="bg-green-600 font-bold text-white py-3 px-6 w-fit" type="submit">
-               
-            </button> */}
-        </form>
+                {!spinner ? <button type="submit" className="btn btn-outline-primary py-2 px-6 w-fit">
+                    Update
+                </button>
+                    :
+                    <button class="btn btn-outline-primary py-2 px-6 w-fit" type="button" disabled>
+                        <span class="spinner-grow spinner-grow-sm mx-2" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
+                }
+
+            </form>
         </>
-        
+
     );
 };
 

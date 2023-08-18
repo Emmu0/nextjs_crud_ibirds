@@ -21,7 +21,6 @@ const EditTopic = ({ params }) => {
                 throw new Error('Failed to fetch topic');
             }
         } catch (error) {
-            // console.log(error);
             toast.error('Failed to fetch topic. Please try again.');
         } finally {
             setIsLoading(false);
@@ -34,7 +33,6 @@ const EditTopic = ({ params }) => {
         }
     }, [id]);
 
-console.log(topic,'topic');
     return (
         
         <div className="container">

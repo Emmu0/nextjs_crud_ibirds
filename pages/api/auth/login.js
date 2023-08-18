@@ -25,7 +25,6 @@ const handle = async (req, res) => {
         return errorHandler(res, 400, "Enter valid Email and Password.");
     } else {
         // registerd successfull
-        console.log(user,'user')
         const match = await bcrypt.compare(password, user.password);
         if (!match) return errorHandler(res, 400, "Enter valid Email and Password.");
         const token = getToken(user._id)

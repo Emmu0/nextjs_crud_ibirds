@@ -5,7 +5,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation';
-import Select  from 'react-select';
+import Select from 'react-select';
 
 const AddTopic = () => {
     const [title, setTitle] = useState('');
@@ -15,9 +15,11 @@ const AddTopic = () => {
 
     const router = useRouter();
     const [selectedImage, setSelectedImage] = useState(null);
+    const [spinner, setspinner] = useState(false)
 
 
     const handleImageChange = (e) => {
+
         const file = e.target.files[0];
         setSelectedImage(file);
 
@@ -31,13 +33,9 @@ const AddTopic = () => {
         }
     };
     const handleSubmit = async (e) => {
-        console.log(URL.createObjectURL(selectedImage), 'base64Image');
-
         e.preventDefault();
-        if (!title || !description || !base64Image) {
-            return toast.error('Title and description are required.');
-        }
         try {
+            setspinner(true)
             const response = await axios.post(`/api/route/create`, {
                 title,
                 description,
@@ -46,14 +44,18 @@ const AddTopic = () => {
             });
 
             if (response.status === 200) {
+                setspinner(false)
+                router.push('/');
                 const timestamp = new Date().toLocaleTimeString();
                 toast.success(`Topic created successfully at ${timestamp}!`);
-                router.push('/');
             } else {
+                setspinner(false)
+
                 throw new Error('Failed to create a topic');
             }
         } catch (error) {
-            console.log(error);
+            setspinner(false)
+
             toast.error('Failed to create a topic. Please try again.');
         }
     };
@@ -62,10 +64,10 @@ const AddTopic = () => {
         { value: 'Fruits', label: 'Fruits' },
         { value: 'Vegitable', label: 'Vegitable' },
         { value: 'city', label: 'city' }
-      ]
+    ]
     return (
         <>
-        <span className="d-flex justify-content-center mt-8 font-bold">Add Topic</span>
+            <span className="d-flex justify-content-center mt-8 font-bold">Add Topic</span>
             <form onSubmit={handleSubmit} className="flex flex-col gap-3 container my-8 w-50 ">
                 <input
                     onChange={(e) => setTitle(e.target.value)}
@@ -99,16 +101,22 @@ const AddTopic = () => {
                         </div>
                     )}
                 </div>
-                <Select onChange={(e)=>setType(e.value)} options={options} />
+                <Select onChange={(e) => setType(e.value)} options={options} />
 
 
-                <button type="submit" className="btn btn-outline-primary py-2 px-6 w-fit">
+                {!spinner ? <button type="submit" className="btn btn-outline-primary py-2 px-6 w-fit">
                     Add Topic
                 </button>
-                
+                    :
+                    <button class="btn btn-outline-primary py-2 px-6 w-fit" type="button" disabled>
+                        <span class="spinner-grow spinner-grow-sm mx-2" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
+                }
+
 
             </form>
-            
+
         </>
     );
 };

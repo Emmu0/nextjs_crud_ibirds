@@ -5,8 +5,6 @@ import errorHandler from '@/utils/error';
 
 export default async (req, res) => {
    if (req.method === 'GET') {
-    console.log(req.body,'query##1');
-    console.log(req.query,'query##2');
 
     const _id = req.query;
 

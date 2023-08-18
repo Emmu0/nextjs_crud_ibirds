@@ -14,7 +14,7 @@ const cookieSetter = (res, token, set) => {
 
 
 const getToken =(id)=>{
-  console.log(jwt.sign({id},process.env.jwt_key),'jwt.sign({id},process.env.jwt_key)');
+  console.log(jwt.sign({id},process.env.jwt_key),'jwt token');
     return jwt.sign({id},process.env.jwt_key)
 }
 

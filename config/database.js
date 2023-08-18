@@ -1,6 +1,5 @@
 
 
-"use client";
 import mongoose from 'mongoose';
 
 const MONGODB_URI = process.env.MONGODB_URI; // Replace 'your_database_name' with the name of your MongoDB database

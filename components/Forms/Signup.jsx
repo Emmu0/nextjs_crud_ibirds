@@ -6,7 +6,6 @@ const Signup = ({ pageHandler }) => {
   const dispatch = useDispatch()
   const { register, handleSubmit, formState: { errors } } = useForm();
   const {signUpResponse} = useSelector((state )=> state.collections);
-  console.log(signUpResponse,'collections');
   const onSubmit = (data) => {
     dispatch(signUp(data))
   };
@@ -29,7 +28,6 @@ const Signup = ({ pageHandler }) => {
                     <small for="exampleInputEmail1">Name</small>
                     <input type="text" className="form-control" {...register('name', { 
                       required: { value: true, message: 'Name is required' }})}  placeholder="name" />
-                    {console.log(errors,'errors')}
                     {errors?.name?.type && <small className="text-danger">{errors?.name?.message}</small>}
                   </div>
                   <div className="form-group">

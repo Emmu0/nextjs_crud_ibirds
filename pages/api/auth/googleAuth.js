@@ -7,12 +7,10 @@ import { getToken } from 'next-auth/jwt';
 import { cookieSetter } from '@/utils';
 
 const handle = async (req, res) => {
-    console.log('heloo !! @@');
 
     if (req.method == "POST") {
 
         const { name, email } = req.body;
-        // console.log(name, email,'name, email');
         if (!name && !email) return errorHandler(res, 400, "Failed Authication !");
 
         const ragexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -25,7 +23,6 @@ const handle = async (req, res) => {
         let token = '';
 
         if (user) {
-            console.log(user, { email }, 'user!!');
 
             token = getToken(user._id)
 

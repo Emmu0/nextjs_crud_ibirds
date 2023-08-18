@@ -1,16 +1,24 @@
 "use client"
 import { FeedbackHandle } from '@/redux/action/api';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Feedback = () => {
     const dispatch = useDispatch()
+    const { responseOk } = useSelector((state) => state.collections)
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const [spinner, setspinner] = useState(false)
 
-// console.log(errors,'errors');
+    useEffect(() => {
+        if (responseOk) {
+            setspinner(false)
+
+        }
+    }, [responseOk])
+
     const onSubmit = (data) => {
-        console.log(data,'new data');
+        setspinner(true)
         dispatch(FeedbackHandle(data))
 
     }
@@ -26,58 +34,66 @@ const Feedback = () => {
                             {/* <input type="password" className="form-control" {...register('password', {
                                 required: { value: true, message: 'Password is required' }
                             })} */}
-                            <input type="text" 
-                            name="name" 
-                            class="form-control" 
-                            placeholder="Your Name" 
-                            {...register('name', {
-                                required: { value: true, message: 'Name Required.' }
-                            })} />
-                        {errors?.name?.type && <small className="m-2 text-danger">{errors?.name?.message}</small>}
+                            <input type="text"
+                                name="name"
+                                class="form-control"
+                                placeholder="Your Name"
+                                {...register('name', {
+                                    required: { value: true, message: 'Name Required.' }
+                                })} />
+                            {errors?.name?.type && <small className="m-2 text-danger">{errors?.name?.message}</small>}
 
                         </div>
                         <div class="col-md-6 form-group">
                             <label className="ml-2">Email</label>
-                            <input type="email" 
-                            class="form-control" 
-                            name="email"
-                            placeholder="Your Email" 
-                            {...register('email', {
-                                required: { value: true, message: 'Email Required.' }
-                            })}/>
-                        {errors?.email?.type && <small className="m-2 text-danger">{errors?.email?.message}</small>}
+                            <input type="email"
+                                class="form-control"
+                                name="email"
+                                placeholder="Your Email"
+                                {...register('email', {
+                                    required: { value: true, message: 'Email Required.' }
+                                })} />
+                            {errors?.email?.type && <small className="m-2 text-danger">{errors?.email?.message}</small>}
                         </div>
                         <div class="form-group col-12">
                             <label className="ml-2">subject</label>
-                            <input type="text" 
-                            class="form-control" 
-                            placeholder="Subject"  
-                            {...register('subject', {
-                                required: { value: true, message: 'Subject Required.' }
-                            })} />
-                        {errors?.subject?.type && <small className="m-2 text-danger">{errors?.subject?.message}</small>}
+                            <input type="text"
+                                class="form-control"
+                                placeholder="Subject"
+                                {...register('subject', {
+                                    required: { value: true, message: 'Subject Required.' }
+                                })} />
+                            {errors?.subject?.type && <small className="m-2 text-danger">{errors?.subject?.message}</small>}
 
                         </div>
                         <div class="form-group col-12">
-                            <textarea 
-                            class="form-control" 
-                            name="message" 
-                            rows="5" 
-                            placeholder="Message"
-                            {...register('message', {
-                                required: { value: true, message: 'message Required.' }
-                            })}></textarea>
-                        {errors?.message?.type && <small className="m-2 text-danger">{errors?.message?.message}</small>}
+                            <textarea
+                                class="form-control"
+                                name="message"
+                                rows="5"
+                                placeholder="Message"
+                                {...register('message', {
+                                    required: { value: true, message: 'message Required.' }
+                                })}></textarea>
+                            {errors?.message?.type && <small className="m-2 text-danger">{errors?.message?.message}</small>}
 
                         </div>
 
-                        <div class="text-center col-12 mt-3"><button 
-                         type="submit" 
-                         disabled={errors?.name?.type || errors?.message?.type || errors?.subject?.type || errors?.email?.type}
-                         className="btn btn-outline-primary py-2 px-6 w-fit"
-                         >
-                            Send Message
-                        </button></div>
+                        <div class="text-center col-12 mt-3">
+                            {!spinner ? <button
+                                type="submit"
+                                disabled={errors?.name?.type || errors?.message?.type || errors?.subject?.type || errors?.email?.type}
+                                className="btn btn-outline-primary py-2 px-6 w-fit"
+                            >
+                                Submit Feedback
+                            </button>
+                                :
+                                <button class="btn btn-outline-primary" type="button" disabled>
+                                    <span class="spinner-grow spinner-grow-sm mx-2" role="status" aria-hidden="true"></span>
+                                    Loading...
+                                </button>
+                            }
+                        </div>
                     </div>
                 </form>
             </div>

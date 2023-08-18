@@ -7,8 +7,6 @@ export default async (req, res) => {
 
     if (req.method == "POST") {
         const { title, description,imgurl,blogtype } = req.body;
-      console.log( req.body,blogtype,'type!!');
-
         if (!title || !description || !imgurl || !blogtype)
         return errorHandler(res, 400, "Please Enter title and description.");
 
@@ -21,7 +19,7 @@ export default async (req, res) => {
         })
         return res.status(200).json({
             success: true,
-            message: 'successfull !',
+            message: 'Successfull Created!',
             rescord: {
                 title: title,
                 description: description,

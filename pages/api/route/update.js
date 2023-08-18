@@ -4,7 +4,6 @@ import Schema from '../../../ApiSchema/database';
 import errorHandler from '@/utils/error';
 
 export default async (req, res) => {
-  console.log(req.method,'req');
   if (req.method === 'PUT') {
     const newData = req.body;
     const _id = req.query;
@@ -22,7 +21,6 @@ export default async (req, res) => {
         { title: newData.title, description: newData.description,imgurl: newData.imgurl  }, // Update with newData
         { new: true } // Return the updated record
       );
-      console.log(updatedRecord, 'updaterecords');
       if (!updatedRecord) {
         return errorHandler(res, 404, 'Record not found.');
       }
@@ -33,7 +31,6 @@ export default async (req, res) => {
         updatedRecord
       });
     } catch (error) {
-      console.log(newData, _id, '_id 1');
 
       return errorHandler(res, 500, 'Internal server error.');
     }

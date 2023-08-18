@@ -8,10 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllTopic } from '@/redux/action/api';
 import { CCard, CCardBody, CCardHeader, CCardImage, CCardText, CCardTitle } from '@coreui/react';
 import { Row, Col } from 'reactstrap'; // Import the necessary components
-import { image2 } from '@/image';
+import { GiSemiClosedEye } from "react-icons/gi";
 
-
-const TopicList = () => {
+const TopicList = ({modalHandler}) => {
     const { responseOk, alltopics_Response } = useSelector((state) => state.collections);
     const dispatch = useDispatch()
 
@@ -25,7 +24,7 @@ const TopicList = () => {
             <Row >
                 {alltopics_Response ?
                     alltopics_Response?.records?.map((data) => (
-                        <Col xs={12} md={4} key={data._id} className='my-5 d-flex justify-content-center'>
+                        <Col xs={12} md={4} key={data._id} className='my-3 d-flex justify-content-center'>
                             <CCard style={{ width: '22rem', height: "25rem" }}>
                                 <CCardImage orientation="top h-50" src={data.imgurl} />
                                 <CCardBody>
@@ -38,6 +37,7 @@ const TopicList = () => {
                                         <button type="button" class="btn btn-outline-primary m-1"> <a href={`hubRoot/editTopic/${data._id}`}>
                                             <HiPencilAlt size={24} />
                                         </a></button>
+                                        <button type="button" class="btn btn-outline-primary m-1" onClick={()=>modalHandler(data)}><GiSemiClosedEye/></button>
                                     </div>
                                 </CCardBody>
                             </CCard>

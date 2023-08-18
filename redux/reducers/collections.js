@@ -1,4 +1,4 @@
-import { ALL_TOPICS, LOGIN, RESPONSE_OK, SIGNUP } from "../action/type";
+import { ALL_FEEDBACK, ALL_TOPICS, LOGIN, RESPONSE_OK, SIGNUP } from "../action/type";
 
 // Initial state
 const initialState = {
@@ -15,7 +15,9 @@ const collections = (state = initialState, action) => {
     case RESPONSE_OK:
       return { ...state, responseOk: action.payload };
     case ALL_TOPICS:
-      return { ...state, alltopics_Response: action.payload }
+      return { ...state, alltopics_Response: action.payload };
+      case ALL_FEEDBACK:
+        return { ...state, allFeedback: action.payload }
     default:
       return state;
   }
