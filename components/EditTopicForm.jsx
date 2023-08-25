@@ -106,8 +106,8 @@ const EditTopicForm = ({ id, title, description, imgUrl }) => {
                     Update
                 </button>
                     :
-                    <button class="btn btn-outline-primary py-2 px-6 w-fit" type="button" disabled>
-                        <span class="spinner-grow spinner-grow-sm mx-2" role="status" aria-hidden="true"></span>
+                    <button className="btn btn-outline-primary py-2 px-6 w-fit" type="button" disabled>
+                        <span className="spinner-grow spinner-grow-sm mx-2" role="status" aria-hidden="true"></span>
                         Loading...
                     </button>
                 }

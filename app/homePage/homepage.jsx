@@ -3,10 +3,12 @@ import TopicList from '@/components/TopicList'
 import DetailPopup from '@/components/popupmodel/DetailPopup';
 import { image2, iamge3 } from '@/image';
 import { carouselItem } from '@/utils/json';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { CCarousel, CCarouselItem, CImage, CCarouselCaption } from '@coreui/react'
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
+
 
 const Homepage = () => {
   const { responseOk } = useSelector((state) => state.collections);
@@ -18,7 +20,7 @@ const Homepage = () => {
     } else {
       toast.warn(responseOk?.message)
     }
-  }, [responseOk])
+  }, [responseOk?.success])
 
  
 
@@ -40,7 +42,7 @@ const Homepage = () => {
             <CImage className="d-block w-100 fixed-height-image" src={vl?.imageUrl?.src} alt="alt.img" />
             <CCarouselCaption className="d-none d-md-block text-white" >
               <h5 className=" fw-bold">{vl?.title}</h5>
-              <p className="" style={{ fontSize: " 2rem" }}>{vl?.body}</p>
+              <p >{vl?.body}</p>
             </CCarouselCaption>
           </CCarouselItem>
         ))}

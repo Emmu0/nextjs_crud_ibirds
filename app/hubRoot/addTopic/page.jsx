@@ -1,22 +1,32 @@
 
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation';
 import Select from 'react-select';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { createBlog } from '@/redux/action/api';
 const AddTopic = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [blogtype, setType] = useState('');
     const [base64Image, setBase64Image] = useState('');
-
+    const dispatch = useDispatch();
     const router = useRouter();
     const [selectedImage, setSelectedImage] = useState(null);
     const [spinner, setspinner] = useState(false)
+    const { responseOk } = useSelector((state) => state.collections);
 
+useEffect(() => {
+    if(responseOk){
+        setspinner(false)
+        console.log(responseOk,'responseOk');
+        router.push("/")
+        // toast.success(`Topic created successfully at !`);
+    }
+}, [responseOk])
 
     const handleImageChange = (e) => {
 
@@ -34,36 +44,43 @@ const AddTopic = () => {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            setspinner(true)
-            const response = await axios.post(`/api/route/create`, {
-                title,
-                description,
-                imgurl: base64Image,
-                blogtype
-            });
+const formData = { title,
+    description,
+    imgurl: base64Image,
+    blogtype
+}
+        dispatch(createBlog(formData))
+        setspinner(true)
+        // try {
+           
+        //     const response = await axios.post(`/api/route/create`, {
+        //         title,
+        //         description,
+        //         imgurl: base64Image,
+        //         blogtype
+        //     });
 
-            if (response.status === 200) {
-                setspinner(false)
-                router.push('/');
-                const timestamp = new Date().toLocaleTimeString();
-                toast.success(`Topic created successfully at ${timestamp}!`);
-            } else {
-                setspinner(false)
+        //     if (response.status === 200) {
+        //         setspinner(false)
+        //         router.push('/');
+        //         const timestamp = new Date().toLocaleTimeString();
+        //         toast.success(`Topic created successfully at ${timestamp}!`);
+        //     } else {
+        //         setspinner(false)
 
-                throw new Error('Failed to create a topic');
-            }
-        } catch (error) {
-            setspinner(false)
+        //         throw new Error('Failed to create a topic');
+        //     }
+        // } catch (error) {
+        //     setspinner(false)
 
-            toast.error('Failed to create a topic. Please try again.');
-        }
+        //     toast.error('Failed to create a topic. Please try again.');
+        // }
     };
     const options = [
-        { value: 'food', label: 'food' },
+        { value: 'Food', label: 'Food' },
         { value: 'Fruits', label: 'Fruits' },
         { value: 'Vegitable', label: 'Vegitable' },
-        { value: 'city', label: 'city' }
+        { value: 'City', label: 'City' }
     ]
     return (
         <>
@@ -108,8 +125,8 @@ const AddTopic = () => {
                     Add Topic
                 </button>
                     :
-                    <button class="btn btn-outline-primary py-2 px-6 w-fit" type="button" disabled>
-                        <span class="spinner-grow spinner-grow-sm mx-2" role="status" aria-hidden="true"></span>
+                    <button className="btn btn-outline-primary py-2 px-6 w-fit" type="button" disabled>
+                        <span className="spinner-grow spinner-grow-sm mx-2" role="status" aria-hidden="true"></span>
                         Loading...
                     </button>
                 }

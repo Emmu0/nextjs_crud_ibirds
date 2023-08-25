@@ -1,7 +1,6 @@
 import axios from "axios";
 import { LOGIN, SIGNUP, RESPONSE_OK, ALL_TOPICS, ALL_FEEDBACK } from "./type";
 
-
 export const loginUser = (formdata) => async (dispatch) => {
     if (formdata) {
         const { data } = await axios.post(`/api/auth/login`,
@@ -113,4 +112,20 @@ export const GetAllFeedBack = () => async (dispatch) => {
         } catch (error) {
             return toast.success(error);
         }
+}
+
+// http://localhost:3000/api/route/create
+export const createBlog = (body) => async (dispatch) => {
+    if(body){
+        try {
+            const { data } = await axios.post(`/api/route/create`,body);
+            dispatch({ type: RESPONSE_OK, payload: data })
+            
+        } catch (error) {
+            return toast.success(error);
+        }
+    }else{
+        dispatch({ type: RESPONSE_OK, payload: undefined })
+    }
+    
 }

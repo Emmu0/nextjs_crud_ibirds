@@ -1,31 +1,53 @@
 import React from 'react';
 import { GrClose } from "react-icons/gr";
+import { AiOutlineIdcard, IconName } from "react-icons/ai";
 
-const DetailPopup = ({modalHandler,modaldata}) => {
+const DetailPopup = ({ modalHandler, modaldata }) => {
     return (
         <div>
-
-            <div class="modal-dialog modal-dialog-scrollable">
-                <div class="modal d-block" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content ">
-                            <div class="modal-header">
-                                <h5 class="modal-title">{modaldata?.title}</h5>
-                                <button type="button" data-bs-dismiss="modal" onClick={()=>modalHandler()}><GrClose /></button>
+            <div className="modal-container" >
+                <div className="modal d-block show" tabIndex="-1">
+                    <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                        <div className="modal-content" >
+                            <div className="modal-header bg-secondary fw-bold text-light">
+                                <AiOutlineIdcard/>
+                                <h6 className="modal-title">{modaldata?.title}</h6>
+                                <button
+                                    type="button"
+                                    // className="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                    onClick={() => modalHandler()}
+                                >
+                                    <GrClose/>
+                                </button>
                             </div>
-                            <div class="modal-body">
-                                <p className=" justify-content-center">Description - {modaldata?.description}</p>
+                            <div className="modal-body">
+                                <p className="description">Description - {modaldata?.description}</p>
                                 <div className="d-flex justify-content-around">
-                                    <span>Type - {modaldata?.type}</span>
-                                    <img src={modaldata?.imgurl} height={100} width={100} alt="img.png" />
+                                    <span className="type">Type - {modaldata?.type}</span>
+                                    <img
+                                        src={modaldata?.imgurl}
+                                        height={100}
+                                        width={100}
+                                        alt="img.png"
+                                    />
                                 </div>
                             </div>
-                            <div class="modal-footer ">
-                                <button type="button" class="btn btn-secondary" onClick={()=>modalHandler()}>Close</button>
+                            
+                            <div className="modal-footer bg-secondary fw-bold">
+                                <button
+                                    type="button"
+                                    className="btn bg-light py-1 px-3"
+                                    onClick={() => modalHandler()}
+                                >
+                                    Close
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div className="modal-backdrop fade show"></div>
             </div>
         </div>
     )

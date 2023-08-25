@@ -1,7 +1,7 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { ToastContainer, toast } from 'react-toastify'
-import AuthProvider from '@/components/AuthProvider'
+import AuthProvider from './_app'
 import 'bootstrap/dist/css/bootstrap.css'
 import { useSelector } from 'react-redux'
 

@@ -13,7 +13,7 @@ const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOO
 const AuthProvider = ({ children }) => {
     useEffect(() => {
         AOS.init();
-      }, [])
+    }, [])
 
     const store = createStore(
         reducers,
